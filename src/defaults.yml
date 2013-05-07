@@ -1,6 +1,6 @@
 dropCost: 1
 dropCurrency: 264
-dropPosition:
+dropLocation:
   world:
   x: 90
   y: 66
