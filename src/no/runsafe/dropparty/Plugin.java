@@ -4,10 +4,10 @@ import no.runsafe.dropparty.commands.ClearItems;
 import no.runsafe.dropparty.commands.ForceStart;
 import no.runsafe.dropparty.events.InventoryClick;
 import no.runsafe.dropparty.events.InventoryMoveItem;
-import no.runsafe.framework.RunsafePlugin;
+import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.command.Command;
 
-public class Plugin extends RunsafePlugin
+public class Plugin extends RunsafeConfigurablePlugin
 {
 	@Override
 	protected void PluginSetup()
