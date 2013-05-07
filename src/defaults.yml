@@ -1,1 +1,8 @@
-option: value
+dropCost: 1
+dropCurrency: 264
+dropPosition:
+  world:
+  x: 90
+  y: 66
+  z: -93
+dropRadius: 13

@@ -5,6 +5,6 @@ authors: []
 depend: []
 description:
 commands:
-  something:
-    description:
-    aliases: []
+  dropparty:
+    description: Drop-party related commands
+    aliases: [dp]
