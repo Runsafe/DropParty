@@ -2,6 +2,7 @@ package no.runsafe.dropparty;
 
 import no.runsafe.framework.configuration.IConfiguration;
 import no.runsafe.framework.event.IConfigurationChanged;
+import no.runsafe.framework.output.IOutput;
 import no.runsafe.framework.server.RunsafeLocation;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.RunsafeWorld;
@@ -17,18 +18,21 @@ import java.util.Map;
 
 public class DropHandler implements IConfigurationChanged
 {
-	public DropHandler(IScheduler scheduler)
+	public DropHandler(IScheduler scheduler, IOutput output)
 	{
 		this.scheduler = scheduler;
+		this.output = output;
 	}
 
 	public void addItem(RunsafeItemStack item)
 	{
+		this.output.fine(String.format("%sx %s added to drop loot.", item.getAmount(), item.getNormalName()));
 		this.items.add(item);
 	}
 
 	public void clearItems()
 	{
+		this.output.fine("Drop loot cleared.");
 		this.items.clear();
 	}
 
@@ -57,8 +61,10 @@ public class DropHandler implements IConfigurationChanged
 
 	public void dropNext()
 	{
+		this.output.fine("Item drop iteration...");
 		if (!this.items.isEmpty())
 		{
+			this.output.fine("Items remaining, dropping random one.");
 			RunsafeLocation location = null;
 			while (location == null)
 			{
@@ -81,6 +87,7 @@ public class DropHandler implements IConfigurationChanged
 		}
 		else
 		{
+			this.output.fine("Out of items, cancelled");
 			this.running = false;
 		}
 	}
@@ -124,4 +131,5 @@ public class DropHandler implements IConfigurationChanged
 	private int dropRadius;
 	private IScheduler scheduler;
 	private boolean running = false;
+	private IOutput output;
 }
