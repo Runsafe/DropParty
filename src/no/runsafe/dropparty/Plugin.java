@@ -3,7 +3,7 @@ package no.runsafe.dropparty;
 import no.runsafe.dropparty.commands.ClearItems;
 import no.runsafe.dropparty.commands.ForceStart;
 import no.runsafe.dropparty.events.InventoryClick;
-import no.runsafe.dropparty.events.InventoryMoveItem;
+import no.runsafe.dropparty.events.InventoryPickupItem;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.command.Command;
 
@@ -22,7 +22,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(dropParty);
 
 		// Events
-		this.addComponent(InventoryMoveItem.class);
+		this.addComponent(InventoryPickupItem.class);
 		this.addComponent(InventoryClick.class);
 	}
 }
