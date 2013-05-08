@@ -24,14 +24,24 @@ public class RightClickSign implements IPlayerRightClickSign, IConfigurationChan
 		{
 			if (!this.dropHandler.dropIsRunning())
 			{
-				RunsafeInventory playerInventory = player.getInventory();
-				if (playerInventory.contains(this.dropCurrency, this.dropCost))
+				if (this.dropHandler.hasLoot())
 				{
-					playerInventory.remove(this.dropCurrency, this.dropCost);
-					this.dropHandler.initiateDrop(player);
+					RunsafeInventory playerInventory = player.getInventory();
+					if (playerInventory.contains(this.dropCurrency, this.dropCost))
+					{
+						playerInventory.remove(this.dropCurrency, this.dropCost);
+						player.updateInventory();
+						this.dropHandler.initiateDrop(player);
+					}
+					else
+					{
+						player.sendColouredMessage("&cYou do not have enough to start a drop party!");
+					}
 				}
 				else
-					player.sendColouredMessage("&cYou do not have enough to start a drop party!");
+				{
+					player.sendColouredMessage("&cThere is no loot in the party pipes!");
+				}
 			}
 			else
 			{

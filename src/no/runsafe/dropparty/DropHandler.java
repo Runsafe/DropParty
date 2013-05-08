@@ -110,6 +110,11 @@ public class DropHandler implements IConfigurationChanged
 		return low + (int)(Math.random() * ((high - low) + 1));
 	}
 
+	public boolean hasLoot()
+	{
+		return !this.items.isEmpty();
+	}
+
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
