@@ -1,9 +1,8 @@
 name: DropParty
 main: no.runsafe.dropparty.Plugin
 version: 1.0.@BUILD@
-authors: []
-depend: []
-description:
+author: Kruithne
+description: Drop parties! Because RS2007 is win.
 commands:
   dropparty:
     description: Drop-party related commands
