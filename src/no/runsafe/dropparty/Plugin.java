@@ -19,6 +19,8 @@ public class Plugin extends RunsafeConfigurablePlugin
 		dropParty.addSubCommand(getInstance(ForceStart.class));
 		dropParty.addSubCommand(getInstance(ClearItems.class));
 
+		this.addComponent(dropParty);
+
 		// Events
 		this.addComponent(InventoryMoveItem.class);
 		this.addComponent(InventoryClick.class);
