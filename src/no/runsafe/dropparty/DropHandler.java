@@ -96,8 +96,8 @@ public class DropHandler implements IConfigurationChanged
 	{
 		int highX = this.dropLocation.getBlockX() + this.dropRadius;
 		int highZ = this.dropLocation.getBlockZ() + this.dropRadius;
-		int lowX = this.dropLocation.getBlockX() + this.dropRadius;
-		int lowZ = this.dropLocation.getBlockZ() + this.dropRadius;
+		int lowX = this.dropLocation.getBlockX() - this.dropRadius;
+		int lowZ = this.dropLocation.getBlockZ() - this.dropRadius;
 
 		return new RunsafeLocation(
 				this.dropLocation.getWorld(),
