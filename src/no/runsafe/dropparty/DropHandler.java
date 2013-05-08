@@ -43,12 +43,7 @@ public class DropHandler implements IConfigurationChanged
 
 	public void initiateDrop(RunsafePlayer player)
 	{
-		RunsafeServer.Instance.broadcastMessage(
-			String.format(
-				"%s &3has initiated a drop-party in the party room, starting in one minute! Use /dropparty to get there!",
-				(player == null ? "" : player.getPrettyName())
-			)
-		);
+		RunsafeServer.Instance.broadcastMessage(String.format(this.eventMessage, (player == null ? "" : player.getPrettyName())));
 
 		this.droppingItems.addAll(this.items);
 		this.items.clear();
@@ -118,6 +113,7 @@ public class DropHandler implements IConfigurationChanged
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
+		this.eventMessage = configuration.getConfigValueAsString("eventMessage");
 		this.dropRadius = configuration.getConfigValueAsInt("dropRadius");
 		Map<String, String> configLocation = configuration.getConfigValuesAsMap("dropLocation");
 
@@ -136,4 +132,5 @@ public class DropHandler implements IConfigurationChanged
 	private IScheduler scheduler;
 	private boolean running = false;
 	private IOutput output;
+	private String eventMessage;
 }
