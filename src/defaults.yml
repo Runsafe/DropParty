@@ -6,3 +6,4 @@ dropLocation:
   y: 66
   z: -93
 dropRadius: 13
+eventMessage: "%s has initiated a drop party which starts in one minute! Use /partyroom to get there!"

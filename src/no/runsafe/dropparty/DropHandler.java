@@ -50,6 +50,9 @@ public class DropHandler implements IConfigurationChanged
 			)
 		);
 
+		this.droppingItems.addAll(this.items);
+		this.items.clear();
+
 		this.scheduler.startSyncTask(new Runnable() {
 			@Override
 			public void run() {
@@ -62,7 +65,7 @@ public class DropHandler implements IConfigurationChanged
 	public void dropNext()
 	{
 		this.output.fine("Item drop iteration...");
-		if (!this.items.isEmpty())
+		if (!this.droppingItems.isEmpty())
 		{
 			this.output.fine("Items remaining, dropping random one.");
 			RunsafeLocation location = null;
@@ -74,9 +77,9 @@ public class DropHandler implements IConfigurationChanged
 			}
 
 			RunsafeWorld world = location.getWorld();
-			world.dropItem(location, this.items.get(0));
+			world.dropItem(location, this.droppingItems.get(0));
 			world.playEffect(location, Effect.POTION_BREAK, 16417);
-			this.items.remove(0);
+			this.droppingItems.remove(0);
 
 			this.scheduler.startSyncTask(new Runnable() {
 				@Override
@@ -127,6 +130,7 @@ public class DropHandler implements IConfigurationChanged
 	}
 
 	private List<RunsafeItemStack> items = new ArrayList<RunsafeItemStack>();
+	private List<RunsafeItemStack> droppingItems = new ArrayList<RunsafeItemStack>();
 	private RunsafeLocation dropLocation;
 	private int dropRadius;
 	private IScheduler scheduler;
