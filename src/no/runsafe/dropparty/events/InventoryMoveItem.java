@@ -6,6 +6,7 @@ import no.runsafe.framework.output.IOutput;
 import no.runsafe.framework.server.block.RunsafeHopper;
 import no.runsafe.framework.server.event.inventory.RunsafeInventoryMoveItemEvent;
 import no.runsafe.framework.server.inventory.IInventoryHolder;
+import no.runsafe.framework.server.item.RunsafeItemStack;
 
 public class InventoryMoveItem implements IInventoryMoveItem
 {
@@ -27,7 +28,9 @@ public class InventoryMoveItem implements IInventoryMoveItem
 			if (hopper.getInventory().getTitle().equalsIgnoreCase("drop_party_consumer"))
 			{
 				this.output.fine("The name of the hopper matched our drop hoppers.");
-				handler.addItem(event.getItem());
+				RunsafeItemStack item = event.getItem();
+				hopper.getInventory().remove(item);
+				handler.addItem(item.clone());
 				event.setCancelled(true);
 			}
 		}
