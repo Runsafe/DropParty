@@ -53,7 +53,7 @@ public class DropHandler implements IConfigurationChanged
 			public void run() {
 				dropNext();
 			}
-		}, 60);
+		}, this.spawnTimer);
 		this.running = true;
 	}
 
@@ -121,6 +121,7 @@ public class DropHandler implements IConfigurationChanged
 		this.eventMessage = configuration.getConfigValueAsString("eventMessage");
 		this.dropRadius = configuration.getConfigValueAsInt("dropRadius");
 		Map<String, String> configLocation = configuration.getConfigValuesAsMap("dropLocation");
+		this.spawnTimer = configuration.getConfigValueAsInt("spawnTimer");
 
 		this.dropLocation = new RunsafeLocation(
 				RunsafeServer.Instance.getWorld(configLocation.get("world")),
@@ -138,4 +139,5 @@ public class DropHandler implements IConfigurationChanged
 	private boolean running = false;
 	private IOutput output;
 	private String eventMessage;
+	private long spawnTimer;
 }

@@ -7,3 +7,4 @@ dropLocation:
   z: -93
 dropRadius: 13
 eventMessage: "%s&b has initiated a drop party which starts in one minute! Use /partyroom to get there!"
+spawnTimer: 500
