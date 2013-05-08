@@ -29,7 +29,7 @@ public class InventoryMoveItem implements IInventoryMoveItem
 			{
 				this.output.fine("The name of the hopper matched our drop hoppers.");
 				RunsafeItemStack item = event.getItem();
-				hopper.getInventory().remove(item);
+				event.getSource().remove(item);
 				handler.addItem(item.clone());
 				event.setCancelled(true);
 			}
