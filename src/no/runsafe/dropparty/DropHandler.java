@@ -53,7 +53,7 @@ public class DropHandler implements IConfigurationChanged
 			public void run() {
 				dropNext();
 			}
-		}, this.spawnTimer);
+		}, 60);
 		this.running = true;
 	}
 
@@ -81,7 +81,7 @@ public class DropHandler implements IConfigurationChanged
 				public void run() {
 					dropNext();
 				}
-			}, 3);
+			}, this.spawnTimer);
 		}
 		else
 		{
