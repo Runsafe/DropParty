@@ -5,6 +5,7 @@ import no.runsafe.dropparty.DropHandler;
 import no.runsafe.framework.configuration.IConfiguration;
 import no.runsafe.framework.event.IConfigurationChanged;
 import no.runsafe.framework.event.player.IPlayerRightClickSign;
+import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.server.block.RunsafeSign;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
 import no.runsafe.framework.server.item.RunsafeItemStack;
@@ -27,10 +28,10 @@ public class RightClickSign implements IPlayerRightClickSign, IConfigurationChan
 				if (this.dropHandler.hasLoot())
 				{
 					RunsafeInventory playerInventory = player.getInventory();
-					if (playerInventory.contains(this.dropCurrency, this.dropCost))
+					Item currencyItem = Item.get(this.dropCurrency);
+					if (playerInventory.contains(currencyItem, this.dropCost))
 					{
-						playerInventory.remove(this.dropCurrency, this.dropCost);
-						player.updateInventory();
+						player.removeItem(currencyItem, this.dropCost);
 						this.dropHandler.initiateDrop(player);
 					}
 					else
