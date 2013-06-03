@@ -43,14 +43,18 @@ public class DropHandler implements IConfigurationChanged
 
 	public void initiateDrop(RunsafePlayer player)
 	{
+		if (dropLocation == null)
+			return;
 		RunsafeServer.Instance.broadcastMessage(String.format(this.eventMessage, (player == null ? "" : player.getPrettyName())));
 
 		this.droppingItems.addAll(this.items);
 		this.items.clear();
 
-		this.scheduler.startSyncTask(new Runnable() {
+		this.scheduler.startSyncTask(new Runnable()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				dropNext();
 			}
 		}, 60);
@@ -76,9 +80,11 @@ public class DropHandler implements IConfigurationChanged
 			world.playEffect(location, Effect.POTION_BREAK, 16417);
 			this.droppingItems.remove(0);
 
-			this.scheduler.startSyncTask(new Runnable() {
+			this.scheduler.startSyncTask(new Runnable()
+			{
 				@Override
-				public void run() {
+				public void run()
+				{
 					dropNext();
 				}
 			}, this.spawnTimer);
@@ -92,22 +98,24 @@ public class DropHandler implements IConfigurationChanged
 
 	private RunsafeLocation getRandomLocation()
 	{
+		if (dropLocation == null)
+			return null;
 		int highX = this.dropLocation.getBlockX() + this.dropRadius;
 		int highZ = this.dropLocation.getBlockZ() + this.dropRadius;
 		int lowX = this.dropLocation.getBlockX() - this.dropRadius;
 		int lowZ = this.dropLocation.getBlockZ() - this.dropRadius;
 
 		return new RunsafeLocation(
-				this.dropLocation.getWorld(),
-				this.getRandom(lowX, highX),
-				this.dropLocation.getBlockY(),
-				this.getRandom(lowZ, highZ)
+			this.dropLocation.getWorld(),
+			this.getRandom(lowX, highX),
+			this.dropLocation.getBlockY(),
+			this.getRandom(lowZ, highZ)
 		);
 	}
 
 	private int getRandom(int low, int high)
 	{
-		return low + (int)(Math.random() * ((high - low) + 1));
+		return low + (int) (Math.random() * ((high - low) + 1));
 	}
 
 	public boolean hasLoot()
@@ -123,12 +131,15 @@ public class DropHandler implements IConfigurationChanged
 		Map<String, String> configLocation = configuration.getConfigValuesAsMap("dropLocation");
 		this.spawnTimer = configuration.getConfigValueAsInt("spawnTimer");
 
-		this.dropLocation = new RunsafeLocation(
-				RunsafeServer.Instance.getWorld(configLocation.get("world")),
+		RunsafeWorld world = RunsafeServer.Instance.getWorld(configLocation.get("world"));
+		this.dropLocation = null;
+		if (world != null)
+			this.dropLocation = new RunsafeLocation(
+				world,
 				Integer.valueOf(configLocation.get("x")),
 				Integer.valueOf(configLocation.get("y")),
 				Integer.valueOf(configLocation.get("z"))
-		);
+			);
 	}
 
 	private List<RunsafeItemStack> items = new ArrayList<RunsafeItemStack>();
