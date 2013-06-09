@@ -24,5 +24,5 @@ public class ClearItems extends ExecutableCommand
 		return "&2All items waiting to be dropped have been removed.";
 	}
 
-	private DropHandler dropHandler;
+	private final DropHandler dropHandler;
 }

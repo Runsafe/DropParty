@@ -142,13 +142,13 @@ public class DropHandler implements IConfigurationChanged
 			);
 	}
 
-	private List<RunsafeItemStack> items = new ArrayList<RunsafeItemStack>();
-	private List<RunsafeItemStack> droppingItems = new ArrayList<RunsafeItemStack>();
+	private final List<RunsafeItemStack> items = new ArrayList<RunsafeItemStack>();
+	private final List<RunsafeItemStack> droppingItems = new ArrayList<RunsafeItemStack>();
 	private RunsafeLocation dropLocation;
 	private int dropRadius;
-	private IScheduler scheduler;
+	private final IScheduler scheduler;
 	private boolean running = false;
-	private IOutput output;
+	private final IOutput output;
 	private String eventMessage;
 	private long spawnTimer;
 }

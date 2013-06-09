@@ -29,5 +29,5 @@ public class ForceStart extends ExecutableCommand
 		return "&2A drop party has been initiated.";
 	}
 
-	private DropHandler dropHandler;
+	private final DropHandler dropHandler;
 }

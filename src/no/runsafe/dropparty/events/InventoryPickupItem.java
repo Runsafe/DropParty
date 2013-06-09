@@ -27,6 +27,6 @@ public class InventoryPickupItem implements IInventoryPickupItem
 		}
 	}
 
-	private DropHandler dropHandler;
+	private final DropHandler dropHandler;
 
 }

@@ -61,5 +61,5 @@ public class RightClickSign implements IPlayerRightClickSign, IConfigurationChan
 
 	private int dropCost;
 	private int dropCurrency;
-	private DropHandler dropHandler;
+	private final DropHandler dropHandler;
 }
