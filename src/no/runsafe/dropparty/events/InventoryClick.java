@@ -19,6 +19,8 @@ public class InventoryClick implements IInventoryClick
 		//if (displayName == null) return;
 
 		RunsafeItemMeta meta = item.getItemMeta();
+		if (meta == null) return;
+
 		String displayName = meta.getDisplayName();
 		if (displayName == null) return;
 
