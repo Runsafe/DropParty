@@ -4,7 +4,7 @@ import no.runsafe.framework.event.inventory.IInventoryClick;
 import no.runsafe.framework.server.event.inventory.RunsafeInventoryClickEvent;
 import no.runsafe.framework.server.inventory.RunsafeAnvilInventory;
 import no.runsafe.framework.server.item.RunsafeItemStack;
-import no.runsafe.framework.server.item.meta.RunsafeItemMeta;
+import no.runsafe.framework.server.item.meta.RunsafeMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 
 public class InventoryClick implements IInventoryClick
@@ -15,13 +15,7 @@ public class InventoryClick implements IInventoryClick
 		RunsafeItemStack item = event.getCurrentItem();
 		if (item == null) return;
 
-		//String displayName = item.getDisplayName();
-		//if (displayName == null) return;
-
-		RunsafeItemMeta meta = item.getItemMeta();
-		if (meta == null) return;
-
-		String displayName = meta.getDisplayName();
+		String displayName = ((RunsafeMeta) item).getDisplayName();
 		if (displayName == null) return;
 
 		RunsafePlayer player = event.getWhoClicked();
