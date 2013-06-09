@@ -6,7 +6,7 @@ import no.runsafe.framework.output.IOutput;
 import no.runsafe.framework.server.RunsafeLocation;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.RunsafeWorld;
-import no.runsafe.framework.server.item.RunsafeItemStack;
+import no.runsafe.framework.server.item.meta.RunsafeMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.framework.timer.IScheduler;
 import org.bukkit.Effect;
@@ -24,7 +24,7 @@ public class DropHandler implements IConfigurationChanged
 		this.output = output;
 	}
 
-	public void addItem(RunsafeItemStack item)
+	public void addItem(RunsafeMeta item)
 	{
 		this.output.fine(String.format("%sx %s added to drop loot.", item.getAmount(), item.getNormalName()));
 		this.items.add(item);
@@ -142,8 +142,8 @@ public class DropHandler implements IConfigurationChanged
 			);
 	}
 
-	private final List<RunsafeItemStack> items = new ArrayList<RunsafeItemStack>();
-	private final List<RunsafeItemStack> droppingItems = new ArrayList<RunsafeItemStack>();
+	private final List<RunsafeMeta> items = new ArrayList<RunsafeMeta>();
+	private final List<RunsafeMeta> droppingItems = new ArrayList<RunsafeMeta>();
 	private RunsafeLocation dropLocation;
 	private int dropRadius;
 	private final IScheduler scheduler;

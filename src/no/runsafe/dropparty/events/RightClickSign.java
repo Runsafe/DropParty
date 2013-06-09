@@ -8,7 +8,7 @@ import no.runsafe.framework.event.player.IPlayerRightClickSign;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.server.block.RunsafeSign;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
-import no.runsafe.framework.server.item.RunsafeItemStack;
+import no.runsafe.framework.server.item.meta.RunsafeMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 
 public class RightClickSign implements IPlayerRightClickSign, IConfigurationChanged
@@ -19,7 +19,7 @@ public class RightClickSign implements IPlayerRightClickSign, IConfigurationChan
 	}
 
 	@Override
-	public boolean OnPlayerRightClickSign(RunsafePlayer player, RunsafeItemStack usingItem, RunsafeSign sign)
+	public boolean OnPlayerRightClickSign(RunsafePlayer player, RunsafeMeta usingItem, RunsafeSign sign)
 	{
 		if (sign.getLine(0).equalsIgnoreCase("Right click to") && sign.getLine(1).equalsIgnoreCase("start party!"))
 		{
