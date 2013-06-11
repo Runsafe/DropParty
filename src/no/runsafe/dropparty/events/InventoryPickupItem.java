@@ -1,10 +1,10 @@
 package no.runsafe.dropparty.events;
 
 import no.runsafe.dropparty.DropHandler;
-import no.runsafe.framework.event.inventory.IInventoryPickupItem;
-import no.runsafe.framework.server.entity.RunsafeItem;
-import no.runsafe.framework.server.event.inventory.RunsafeInventoryPickupItemEvent;
-import no.runsafe.framework.server.inventory.RunsafeInventory;
+import no.runsafe.framework.api.event.inventory.IInventoryPickupItem;
+import no.runsafe.framework.minecraft.entity.RunsafeItem;
+import no.runsafe.framework.minecraft.event.inventory.RunsafeInventoryPickupItemEvent;
+import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
 public class InventoryPickupItem implements IInventoryPickupItem
 {

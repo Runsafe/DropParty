@@ -1,21 +1,20 @@
 package no.runsafe.dropparty.events;
 
-import no.runsafe.framework.event.inventory.IInventoryClick;
-import no.runsafe.framework.server.event.inventory.RunsafeInventoryClickEvent;
-import no.runsafe.framework.server.inventory.RunsafeAnvilInventory;
-import no.runsafe.framework.server.item.RunsafeItemStack;
-import no.runsafe.framework.server.item.meta.RunsafeMeta;
-import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.api.event.inventory.IInventoryClick;
+import no.runsafe.framework.minecraft.event.inventory.RunsafeInventoryClickEvent;
+import no.runsafe.framework.minecraft.inventory.RunsafeAnvilInventory;
+import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class InventoryClick implements IInventoryClick
 {
 	@Override
 	public void OnInventoryClickEvent(RunsafeInventoryClickEvent event)
 	{
-		RunsafeItemStack item = event.getCurrentItem();
+		RunsafeMeta item = event.getCurrentItem();
 		if (item == null) return;
 
-		String displayName = ((RunsafeMeta) item).getDisplayName();
+		String displayName = item.getDisplayName();
 		if (displayName == null) return;
 
 		RunsafePlayer player = event.getWhoClicked();

@@ -6,7 +6,7 @@ import no.runsafe.dropparty.events.InventoryClick;
 import no.runsafe.dropparty.events.InventoryPickupItem;
 import no.runsafe.dropparty.events.RightClickSign;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
-import no.runsafe.framework.command.Command;
+import no.runsafe.framework.api.command.Command;
 
 public class Plugin extends RunsafeConfigurablePlugin
 {
