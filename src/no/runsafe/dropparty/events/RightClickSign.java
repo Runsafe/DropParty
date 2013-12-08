@@ -5,11 +5,11 @@ import no.runsafe.dropparty.DropHandler;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.event.player.IPlayerRightClickSign;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.block.RunsafeSign;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class RightClickSign implements IPlayerRightClickSign, IConfigurationChanged
 {
@@ -19,7 +19,7 @@ public class RightClickSign implements IPlayerRightClickSign, IConfigurationChan
 	}
 
 	@Override
-	public boolean OnPlayerRightClickSign(RunsafePlayer player, RunsafeMeta usingItem, RunsafeSign sign)
+	public boolean OnPlayerRightClickSign(IPlayer player, RunsafeMeta usingItem, RunsafeSign sign)
 	{
 		if (sign.getLine(0).equalsIgnoreCase("Right click to") && sign.getLine(1).equalsIgnoreCase("start party!"))
 		{

@@ -2,12 +2,12 @@ package no.runsafe.dropparty;
 
 import no.runsafe.framework.api.*;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.internal.wrapper.BukkitWorld;
+import no.runsafe.framework.minecraft.Firework;
 import no.runsafe.framework.minecraft.RunsafeLocation;
-import no.runsafe.framework.minecraft.RunsafeWorld;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import org.bukkit.Effect;
-import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class DropHandler implements IConfigurationChanged
 		return this.running;
 	}
 
-	public void initiateDrop(RunsafePlayer player)
+	public void initiateDrop(IPlayer player)
 	{
 		if (dropLocation == null)
 			return;
@@ -69,13 +69,13 @@ public class DropHandler implements IConfigurationChanged
 			while (location == null)
 			{
 				RunsafeLocation randomLocation = this.getRandomLocation();
-				if (randomLocation.getBlock().getTypeId() == Material.AIR.getId())
+				if (randomLocation.getBlock().isAir())
 					location = randomLocation;
 			}
 
 			IWorld world = location.getWorld();
 			world.dropItem(location, this.droppingItems.get(0));
-			world.playEffect(location, Effect.POTION_BREAK, 16417);
+			((BukkitWorld)world).playEffect(location, Effect.POTION_BREAK, 16417);
 			this.droppingItems.remove(0);
 
 			this.scheduler.startSyncTask(new Runnable()
