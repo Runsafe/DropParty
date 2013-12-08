@@ -1,11 +1,8 @@
 package no.runsafe.dropparty;
 
-import no.runsafe.framework.api.IConfiguration;
-import no.runsafe.framework.api.IOutput;
-import no.runsafe.framework.api.IScheduler;
+import no.runsafe.framework.api.*;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.RunsafeLocation;
-import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.RunsafeWorld;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
@@ -18,21 +15,22 @@ import java.util.Map;
 
 public class DropHandler implements IConfigurationChanged
 {
-	public DropHandler(IScheduler scheduler, IOutput output)
+	public DropHandler(IScheduler scheduler, IDebug output, IServer server)
 	{
 		this.scheduler = scheduler;
 		this.output = output;
+		this.server = server;
 	}
 
 	public void addItem(RunsafeMeta item)
 	{
-		this.output.fine(String.format("%sx %s added to drop loot.", item.getAmount(), item.getNormalName()));
+		this.output.debugFine("%sx %s added to drop loot.", item.getAmount(), item.getNormalName());
 		this.items.add(item);
 	}
 
 	public void clearItems()
 	{
-		this.output.fine("Drop loot cleared.");
+		this.output.debugFine("Drop loot cleared.");
 		this.items.clear();
 	}
 
@@ -45,7 +43,7 @@ public class DropHandler implements IConfigurationChanged
 	{
 		if (dropLocation == null)
 			return;
-		RunsafeServer.Instance.broadcastMessage(String.format(this.eventMessage, (player == null ? "" : player.getPrettyName())));
+		server.broadcastMessage(String.format(this.eventMessage, (player == null ? "" : player.getPrettyName())));
 
 		this.droppingItems.addAll(this.items);
 		this.items.clear();
@@ -63,10 +61,10 @@ public class DropHandler implements IConfigurationChanged
 
 	public void dropNext()
 	{
-		this.output.fine("Item drop iteration...");
+		this.output.debugFine("Item drop iteration...");
 		if (!this.droppingItems.isEmpty())
 		{
-			this.output.fine("Items remaining, dropping random one.");
+			this.output.debugFine("Items remaining, dropping random one.");
 			RunsafeLocation location = null;
 			while (location == null)
 			{
@@ -75,7 +73,7 @@ public class DropHandler implements IConfigurationChanged
 					location = randomLocation;
 			}
 
-			RunsafeWorld world = location.getWorld();
+			IWorld world = location.getWorld();
 			world.dropItem(location, this.droppingItems.get(0));
 			world.playEffect(location, Effect.POTION_BREAK, 16417);
 			this.droppingItems.remove(0);
@@ -91,7 +89,7 @@ public class DropHandler implements IConfigurationChanged
 		}
 		else
 		{
-			this.output.fine("Out of items, cancelled");
+			this.output.debugFine("Out of items, cancelled");
 			this.running = false;
 		}
 	}
@@ -131,7 +129,7 @@ public class DropHandler implements IConfigurationChanged
 		Map<String, String> configLocation = configuration.getConfigValuesAsMap("dropLocation");
 		this.spawnTimer = configuration.getConfigValueAsInt("spawnTimer");
 
-		RunsafeWorld world = RunsafeServer.Instance.getWorld(configLocation.get("world"));
+		IWorld world = server.getWorld(configLocation.get("world"));
 		this.dropLocation = null;
 		if (world != null)
 			this.dropLocation = new RunsafeLocation(
@@ -148,7 +146,8 @@ public class DropHandler implements IConfigurationChanged
 	private int dropRadius;
 	private final IScheduler scheduler;
 	private boolean running = false;
-	private final IOutput output;
+	private final IDebug output;
+	private final IServer server;
 	private String eventMessage;
 	private long spawnTimer;
 }
