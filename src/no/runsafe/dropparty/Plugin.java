@@ -11,7 +11,7 @@ import no.runsafe.framework.api.command.Command;
 public class Plugin extends RunsafeConfigurablePlugin
 {
 	@Override
-	protected void PluginSetup()
+	protected void pluginSetup()
 	{
 		// Commands
 		this.addComponent(DropHandler.class);
