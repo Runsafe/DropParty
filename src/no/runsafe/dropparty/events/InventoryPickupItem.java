@@ -23,7 +23,7 @@ public class InventoryPickupItem implements IInventoryPickupItem
 			RunsafeItem item = event.getItem();
 			this.dropHandler.addItem(item.getItemStack());
 			item.remove();
-			event.setCancelled(true);
+			event.cancel();
 		}
 	}
 

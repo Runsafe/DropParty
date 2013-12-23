@@ -2,16 +2,14 @@ package no.runsafe.dropparty;
 
 import no.runsafe.framework.api.*;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.log.IDebug;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.BukkitWorld;
-import no.runsafe.framework.minecraft.Firework;
-import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import org.bukkit.Effect;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DropHandler implements IConfigurationChanged
 {
@@ -65,17 +63,17 @@ public class DropHandler implements IConfigurationChanged
 		if (!this.droppingItems.isEmpty())
 		{
 			this.output.debugFine("Items remaining, dropping random one.");
-			RunsafeLocation location = null;
+			ILocation location = null;
 			while (location == null)
 			{
-				RunsafeLocation randomLocation = this.getRandomLocation();
+				ILocation randomLocation = this.getRandomLocation();
 				if (randomLocation.getBlock().isAir())
 					location = randomLocation;
 			}
 
 			IWorld world = location.getWorld();
 			world.dropItem(location, this.droppingItems.get(0));
-			((BukkitWorld)world).playEffect(location, Effect.POTION_BREAK, 16417);
+			((BukkitWorld) world).playEffect(location, Effect.POTION_BREAK, 16417);
 			this.droppingItems.remove(0);
 
 			this.scheduler.startSyncTask(new Runnable()
@@ -94,7 +92,7 @@ public class DropHandler implements IConfigurationChanged
 		}
 	}
 
-	private RunsafeLocation getRandomLocation()
+	private ILocation getRandomLocation()
 	{
 		if (dropLocation == null)
 			return null;
@@ -103,15 +101,14 @@ public class DropHandler implements IConfigurationChanged
 		int lowX = this.dropLocation.getBlockX() - this.dropRadius;
 		int lowZ = this.dropLocation.getBlockZ() - this.dropRadius;
 
-		return new RunsafeLocation(
-			this.dropLocation.getWorld(),
+		return this.dropLocation.getWorld().getLocation(
 			this.getRandom(lowX, highX),
-			this.dropLocation.getBlockY(),
+			(double) this.dropLocation.getBlockY(),
 			this.getRandom(lowZ, highZ)
 		);
 	}
 
-	private int getRandom(int low, int high)
+	private double getRandom(int low, int high)
 	{
 		return low + (int) (Math.random() * ((high - low) + 1));
 	}
@@ -126,23 +123,13 @@ public class DropHandler implements IConfigurationChanged
 	{
 		this.eventMessage = configuration.getConfigValueAsString("eventMessage");
 		this.dropRadius = configuration.getConfigValueAsInt("dropRadius");
-		Map<String, String> configLocation = configuration.getConfigValuesAsMap("dropLocation");
+		this.dropLocation = configuration.getConfigValueAsLocation("dropLocation");
 		this.spawnTimer = configuration.getConfigValueAsInt("spawnTimer");
-
-		IWorld world = server.getWorld(configLocation.get("world"));
-		this.dropLocation = null;
-		if (world != null)
-			this.dropLocation = new RunsafeLocation(
-				world,
-				Integer.valueOf(configLocation.get("x")),
-				Integer.valueOf(configLocation.get("y")),
-				Integer.valueOf(configLocation.get("z"))
-			);
 	}
 
 	private final List<RunsafeMeta> items = new ArrayList<RunsafeMeta>();
 	private final List<RunsafeMeta> droppingItems = new ArrayList<RunsafeMeta>();
-	private RunsafeLocation dropLocation;
+	private ILocation dropLocation;
 	private int dropRadius;
 	private final IScheduler scheduler;
 	private boolean running = false;

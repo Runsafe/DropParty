@@ -26,7 +26,7 @@ public class InventoryClick implements IInventoryClick
 				if (!player.hasPermission("runsafe.dropparty.createconsumer"))
 				{
 					player.sendColouredMessage("&cYou cannot do that.");
-					event.setCancelled(true);
+					event.cancel();
 				}
 			}
 		}
