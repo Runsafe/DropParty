@@ -3,8 +3,7 @@ package no.runsafe.dropparty.commands;
 import no.runsafe.dropparty.DropHandler;
 import no.runsafe.framework.api.command.ExecutableCommand;
 import no.runsafe.framework.api.command.ICommandExecutor;
-
-import java.util.Map;
+import no.runsafe.framework.api.command.argument.IArgumentList;
 
 public class ClearItems extends ExecutableCommand
 {
@@ -15,7 +14,7 @@ public class ClearItems extends ExecutableCommand
 	}
 
 	@Override
-	public String OnExecute(ICommandExecutor executor, Map<String, String> parameters)
+	public String OnExecute(ICommandExecutor executor, IArgumentList argumentList)
 	{
 		if (this.dropHandler.dropIsRunning())
 			return "&2You cannot empty item list right now.";

@@ -3,9 +3,8 @@ package no.runsafe.dropparty.commands;
 import no.runsafe.dropparty.DropHandler;
 import no.runsafe.framework.api.command.ExecutableCommand;
 import no.runsafe.framework.api.command.ICommandExecutor;
+import no.runsafe.framework.api.command.argument.IArgumentList;
 import no.runsafe.framework.api.player.IPlayer;
-
-import java.util.Map;
 
 public class ForceStart extends ExecutableCommand
 {
@@ -16,7 +15,7 @@ public class ForceStart extends ExecutableCommand
 	}
 
 	@Override
-	public String OnExecute(ICommandExecutor executor, Map<String, String> parameters)
+	public String OnExecute(ICommandExecutor executor, IArgumentList argumentList)
 	{
 		if (this.dropHandler.dropIsRunning())
 			return "&cA drop party is already in progress.";
