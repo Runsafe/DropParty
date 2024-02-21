@@ -46,14 +46,7 @@ public class DropHandler implements IConfigurationChanged
 		this.droppingItems.addAll(this.items);
 		this.items.clear();
 
-		this.scheduler.startSyncTask(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				dropNext();
-			}
-		}, 60);
+		this.scheduler.startSyncTask(this::dropNext, 60);
 		this.running = true;
 	}
 
@@ -64,11 +57,19 @@ public class DropHandler implements IConfigurationChanged
 		{
 			this.output.debugFine("Items remaining, dropping random one.");
 			ILocation location = null;
-			while (location == null)
+			int retries = 100;
+			while (location == null && retries-- > 0)
 			{
 				ILocation randomLocation = this.getRandomLocation();
-				if (randomLocation.getBlock().isAir())
+				if (randomLocation == null || randomLocation.getBlock().isAir())
 					location = randomLocation;
+			}
+
+			if (location == null)
+			{
+				this.output.debugWarning("No location found to drop item, cancelled");
+				this.running = false;
+				return;
 			}
 
 			IWorld world = location.getWorld();
@@ -76,14 +77,7 @@ public class DropHandler implements IConfigurationChanged
 			((BukkitWorld) world).playEffect(location, Effect.POTION_BREAK, 16417);
 			this.droppingItems.remove(0);
 
-			this.scheduler.startSyncTask(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					dropNext();
-				}
-			}, this.spawnTimer);
+			this.scheduler.startSyncTask(this::dropNext, this.spawnTimer);
 		}
 		else
 		{
@@ -127,8 +121,8 @@ public class DropHandler implements IConfigurationChanged
 		this.spawnTimer = configuration.getConfigValueAsInt("spawnTimer");
 	}
 
-	private final List<RunsafeMeta> items = new ArrayList<RunsafeMeta>();
-	private final List<RunsafeMeta> droppingItems = new ArrayList<RunsafeMeta>();
+	private final List<RunsafeMeta> items = new ArrayList<>();
+	private final List<RunsafeMeta> droppingItems = new ArrayList<>();
 	private ILocation dropLocation;
 	private int dropRadius;
 	private final IScheduler scheduler;

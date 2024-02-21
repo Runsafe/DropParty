@@ -22,34 +22,30 @@ public class RightClickSign implements IPlayerRightClickSign, IConfigurationChan
 	@Override
 	public boolean OnPlayerRightClickSign(IPlayer player, RunsafeMeta usingItem, ISign sign)
 	{
-		if (sign.getLine(0).equalsIgnoreCase("Right click to") && sign.getLine(1).equalsIgnoreCase("start party!"))
+		if (!sign.getLine(0).equalsIgnoreCase("Right click to")
+			|| !sign.getLine(1).equalsIgnoreCase("start party!"))
 		{
-			if (!this.dropHandler.dropIsRunning())
-			{
-				if (this.dropHandler.hasLoot())
-				{
-					RunsafeInventory playerInventory = player.getInventory();
-					Item currencyItem = Item.get(LegacyMaterial.getById(this.dropCurrency).name());
-					if (playerInventory.contains(currencyItem, this.dropCost))
-					{
-						player.removeItem(currencyItem, this.dropCost);
-						this.dropHandler.initiateDrop(player);
-					}
-					else
-					{
-						player.sendColouredMessage("&cYou do not have enough to start a drop party!");
-					}
-				}
-				else
-				{
-					player.sendColouredMessage("&cThere is no loot in the party pipes!");
-				}
-			}
-			else
-			{
-				player.sendColouredMessage("&cA drop party is already running!");
-			}
+			return true;
 		}
+		if (this.dropHandler.dropIsRunning())
+		{
+			player.sendColouredMessage("&cA drop party is already running!");
+			return true;
+		}
+		if (!this.dropHandler.hasLoot())
+		{
+			player.sendColouredMessage("&cThere is no loot in the party pipes!");
+			return true;
+		}
+		RunsafeInventory playerInventory = player.getInventory();
+		Item currencyItem = Item.get(LegacyMaterial.getById(this.dropCurrency).name());
+		if (currencyItem != null && playerInventory.contains(currencyItem, this.dropCost))
+		{
+			player.removeItem(currencyItem, this.dropCost);
+			this.dropHandler.initiateDrop(player);
+			return true;
+		}
+		player.sendColouredMessage("&cYou do not have enough to start a drop party!");
 		return true;
 	}
 
